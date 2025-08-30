@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: Forex Scalp Signals AI
+  version: "1.0.0"
+  description: |
+    AI microservice for generating scalp signals (M1/M5/M15) for XAUUSD and EURUSD.
+    Outputs 3 take-profits, BE move on TP1, confidence score, and news gating.
+servers:
+  - url: https://your-ai.example.com
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /generate:
+    post:
+      summary: Generate a scalp signal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [symbol, timeframe]
+              properties:
+                symbol: {type: string, enum: [XAUUSD, EURUSD]}
+                timeframe: {type: string, enum: [M1, M5, M15]}
+                lookback: {type: integer, default: 400}
+                session_filter: {type: boolean, default: true}
+                min_rr: {type: number, default: 1.5}
+                min_confidence: {type: integer, default: 85}
+                news_block_minutes: {type: integer, default: 30}
+      responses:
+        '200':
+          description: Signal generated
+        '204':
+          description: No suitable signal
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []

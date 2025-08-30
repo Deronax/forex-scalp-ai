@@ -1,0 +1,3 @@
+Subject: TP1 hit — Stop moved to BE
+
+TP1 hit for {{symbol}} ({{timeframe}}). SL moved to BE. TP2: {{tp2}} | TP3: {{tp3}}.
